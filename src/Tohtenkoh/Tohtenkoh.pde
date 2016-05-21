@@ -97,42 +97,9 @@
       com2.Tehai.add(shuffled.get(i+26));
       nowHaiNum += 3;
     }
-    sortTehai(me);
+    me.sortTehai();
     drawTehai(me);
     System.out.printf("====HaipaiFinish====\n");
-  }
-  
-  //TODO sortTehaiはPlayerの中に入れる
-  //TODO players[nowPlayer % 3].sortTehai(); こっち採用したい
-  //手配のソート
-  void sortTehai(Player player){
-    ArrayList tehai = player.Tehai;
-    ArrayList<Hai> target = new ArrayList<Hai>(tehai);
-    ArrayList<Hai> sorted = new ArrayList<Hai>();
-    
-    for(int i = 0; i < tehai.size(); i++){
-      float min = 999;
-      int min_num = 0;
-      
-      for(int j = 0; j < tehai.size() - i; j++){
-        Hai hai = target.get(j);
-        int id = hai.getId();
-
-        if(id < min){
-          min = id;
-          min_num = j;
-        }
-      }
-     sorted.add(target.get(min_num));
-     target.remove(min_num);
-    }
-    System.out.println("====sortTehaiFinish====");
-    
-    for(Hai hai: sorted){
-      System.out.printf("%d,",hai.id);
-    }
-    System.out.println();
-    player.Tehai = sorted;
   }
   
   //ツモして表示
@@ -147,12 +114,13 @@
     System.out.printf("\n====TsumoFinish====\n");
   }
   
-  //クリックで牌を捨てる
+  //クリックされたら
   void mousePressed(){
     System.out.println("クリックされた");
     Choice();
   }
 
+  //牌選択
   void Choice(){
     Player player = players[nowPlayer % 3];
     int x = mouseX;
@@ -173,7 +141,7 @@
     player.Tehai.remove(suteHai);
     drawKawa(player);
     
-    sortTehai(player);
+    player.sortTehai();
     drawTehai(player);
     nowHaiNum += 1;
     
